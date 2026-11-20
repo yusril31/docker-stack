@@ -41,10 +41,17 @@ EOF
   echo ".env dibuat dengan password acak: $PWD/.env"
 fi
 
+export SUPER_APP_PATH="${SUPER_APP_PATH:-/var/www/super-app}"
+if [ ! -d "$SUPER_APP_PATH" ]; then
+  echo "Catatan: SUPER_APP_PATH=$SUPER_APP_PATH belum ada."
+  echo "        Set SUPER_APP_PATH ke lokasi repo super-app."
+fi
+
 docker compose up -d
 
 echo
 echo "Nginx      : http://<ip-host>:8081        (PHP: /index.php)"
+echo "Super-app  : http://<ip-host>:8083        (repo: $SUPER_APP_PATH)"
 echo "Node       : http://<ip-host>:3000"
 echo "MySQL      : <ip-host>:3306   db=app user=app"
 echo "Redis      : <ip-host>:6380"
