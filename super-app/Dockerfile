@@ -24,3 +24,7 @@ RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 WORKDIR /var/www/html
 ENTRYPOINT ["docker-entrypoint.sh"]
 CMD ["php-fpm"]
+
+# php:8.2-fpm default: "listen = 9000" hanya bind IPv6 ([::]:9000).
+# nginx-resolve "super-app" menghasilkan IPv4, jadi override ke semua IPv4.
+RUN printf '[www]\nlisten = 0.0.0.0:9000\n' > /usr/local/etc/php-fpm.d/zz-hms-listen.conf

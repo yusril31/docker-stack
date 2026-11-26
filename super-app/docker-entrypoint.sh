@@ -10,6 +10,6 @@ fi
 
 # Laravel butuh storage dan bootstrap/cache writable oleh PHP-FPM (www-data).
 chown -R www-data:www-data storage bootstrap/cache 2>/dev/null || true
-php artisan storage:link >/dev/null 2>&1 || true
+timeout 10 php artisan storage:link >/dev/null 2>&1 || true
 
 exec "$@"
